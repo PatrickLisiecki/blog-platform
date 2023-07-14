@@ -1,1 +1,1 @@
-# blog-platform-backend
+# Blog Platform Backend
