@@ -9,7 +9,7 @@ module.exports = {
          * Example:
          * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
          */
-        await queryInterface.addColumn("comments", "userId", {
+        await queryInterface.addColumn("comments", "UserId", {
             type: Sequelize.INTEGER,
             references: {
                 model: "users", // you can use the table name here
@@ -18,7 +18,7 @@ module.exports = {
             onUpdate: "CASCADE",
             onDelete: "SET NULL",
         });
-        await queryInterface.addColumn("comments", "postId", {
+        await queryInterface.addColumn("comments", "PostId", {
             type: Sequelize.INTEGER,
             references: {
                 model: "posts", // you can use the table name here
@@ -36,7 +36,7 @@ module.exports = {
          * Example:
          * await queryInterface.dropTable('users');
          */
-        await queryInterface.removeColumn("comments", "userId");
-        await queryInterface.removeColumn("comments", "postId");
+        await queryInterface.removeColumn("comments", "UserId");
+        await queryInterface.removeColumn("comments", "PostId");
     },
 };

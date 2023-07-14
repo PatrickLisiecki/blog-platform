@@ -3,9 +3,7 @@ const { Post } = require("../models");
 const getPostsController = async (req, res) => {
     try {
         // Query the database for the user with the given name
-        const userPosts = await Post.findAll({
-            where: { userId: req.params.userId },
-        });
+        const userPosts = await Post.findAll();
 
         if (userPosts) {
             res.status(200).json(userPosts);
