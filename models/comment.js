@@ -1,7 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    class User extends Model {
+    class Comment extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
@@ -9,27 +9,22 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
-            this.hasMany(models.Post);
-            this.hasMany(models.Comment);
+            this.belongsTo(models.User);
+            this.belongsTo(models.Post);
         }
     }
-    User.init(
+    Comment.init(
         {
-            name: {
-                type: DataTypes.STRING,
-                allowNull: false,
-            },
-            password: {
-                type: DataTypes.STRING,
+            content: {
+                type: DataTypes.TEXT,
                 allowNull: false,
             },
         },
         {
             sequelize,
-            modelName: "User",
-            tableName: "users", // explicit snake cased table name
-            underscored: true, // this option converts camelCased columns to snake_case in the DB
+            modelName: "Comment",
+            tableName: "comments",
         }
     );
-    return User;
+    return Comment;
 };
