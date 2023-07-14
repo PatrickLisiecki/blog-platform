@@ -12,6 +12,9 @@ const signUpController = async (req, res) => {
             password: hashedPassword,
         });
 
+        // Send a cookie to the client
+        req.session.userId = newUser.id;
+
         res.status(201).json({
             message: "User created successfully",
             name: newUser.name,
