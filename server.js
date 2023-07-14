@@ -58,4 +58,4 @@ app.delete("/logout", logOutController);
 
 app.post("/posts", authenticateUser, createPostController);
 
-app.get("/posts/:userId", authenticateUser, getPostsController);
+app.get("/posts", authenticateUser, getPostsController);
