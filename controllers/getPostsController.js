@@ -2,11 +2,11 @@ const { Post } = require("../models");
 
 const getPostsController = async (req, res) => {
     try {
-        // Query the database for the user with the given name
-        const userPosts = await Post.findAll();
+        // SELECT * FROM posts;
+        const allPosts = await Post.findAll();
 
-        if (userPosts) {
-            res.status(200).json(userPosts);
+        if (allPosts) {
+            res.status(200).json(allPosts);
         } else {
             res.status(404).json({ message: "No posts found." });
         }

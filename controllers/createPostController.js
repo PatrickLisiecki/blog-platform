@@ -3,6 +3,7 @@ const { Post } = require("../models");
 const createPostController = async (req, res) => {
     const postTitle = req.body.title;
     const postContent = req.body.content;
+
     try {
         const newPost = await Post.create({
             title: postTitle,
