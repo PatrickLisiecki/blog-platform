@@ -78,18 +78,20 @@ This is an explanation of the tables and relationships included in the project.
     - One-to-Many: A Post can have multiple Comments.
     - Many-to-One: A Comment belongs to a User and a Post.
 
-Make sure to test the relationships by creating sample data and performing queries to retrieve
-associated records.
-
 ## User Authentication and Authorization
 
 The application includes user registration and login functionality with secure password storage.
 
-1. The bcryptjs package is used to hash and salt passwords for secure storage.
+1. The ```bcryptjs``` package is used to hash and salt passwords for secure storage.
 2. To protect routes that require authentication, the application uses middleware that checks for a
    valid session cookie.
 3. You can test the user registration and login endpoints using Postman or any other API testing
-   tool. Make sure that only authenticated users can access the protected routes.
+   tool.
+4. API endpoints to handle user registration, login, and logout operations:
+   
+   - ```POST /signup```: Create a new User with a name and password.
+   - ```POST /login```: Login to an existing User.
+   - ```DELETE /logout```: Logout of an existing User.
 
 ## CRUD Operations for Posts
 
@@ -97,11 +99,12 @@ The application allows CRUD operations for the Posts resource. Only authenticate
 CRUD operations on Posts. Unauthenticated users should receive an error or be redirected.
 
 1. API endpoints to handle the following operations:
-    - Create a new Post.
-    - Retrieve all Posts.
-    - Retrieve a specific Post by ID.
-    - Update a Post.
-    - Delete a Post.
+   
+    - ```POST /posts```: Create a new Post.
+    - ```GET /posts```: Retrieve all Posts.
+    - ```GET /posts/:postId```: Retrieve a specific Post by ID.
+    - ```PATCH /posts/:postId```: Update a Post.
+    - ```DELETE /posts/:postId```: Delete a Post.
 
 2. Test the CRUD operations using Postman. Create sample posts, retrieve and update them, and
     finally delete them to ensure everything works as expected.
@@ -113,11 +116,12 @@ can perform CRUD operations on Comments. Unauthenticated users should receive an
 redirected.
 
 1. API endpoints to handle the following operations:
-    - Create a new Comment for a specific post.
-    - Retrieve all Comments for a specific Post.
-    - Retrieve a specific Comment by ID.
-    - Update a Comment.
-    - Delete a Comment.
+   
+    - ```POST /posts/:postId/comments```: Create a new Comment for a specific post.
+    - ```GET /posts/:postId:/comments```: Retrieve all Comments for a specific Post.
+    - ```GET /posts/:postId:/comments/:commentId```: Retrieve a specific Comment by ID.
+    - ```PATCH /posts/:postId:/comments/:commentId```: Update a Comment.
+    - ```DELETE /posts/:postId:/comments/:commentId```: Delete a Comment.
 
 2. Test the CRUD operations using Postman. Create comments, retrieve and update them, and finally
    delete them to ensure the functionality is working correctly.
