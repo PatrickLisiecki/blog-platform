@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
+const cors = require("cors");
 const app = express();
 const port = 7777;
 
@@ -23,6 +24,14 @@ const getCommentByIdController = require("./controllers/getCommentByIdController
 const updateCommentController = require("./controllers/updateCommentController");
 const deleteCommentController = require("./controllers/deleteCommentController");
 
+// Import error handlers
+const { forbiddenErrorHandler, notFoundErrorHandler } = require("./errors/index");
+
+// Import routes
+const authRouter = require("./routes/auth");
+
+
+
 const authenticateUser = (req, res, next) => {
     if (!req.session.userId) {
         return res.status(401).json({ message: "You must be logged in to view this page." });
@@ -31,6 +40,14 @@ const authenticateUser = (req, res, next) => {
 };
 
 app.use(express.json());
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        allowedHeaders: ["Content-Type", "Authorization"],
+        methods: ["GET", "POST", "PATCH", "DELETE"],
+    })
+);
 
 app.use(
     session({
@@ -60,21 +77,28 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
+// Error handlers
+// app.use(forbiddenErrorHandler);
+// app.use(notFoundErrorHandler); 
+
+// Routes
+app.use("/api/auth", authRouter);
+
 // User sign up, log in, and log out routes
-app.post("/signup", signUpController);
-app.post("/login", logInController);
-app.delete("/logout", logOutController);
+// app.post("/signup", signUpController);
+// app.post("/login", logInController);
+// app.delete("/logout", logOutController);
 
 // CRUD routes for posts
-app.post("/posts", authenticateUser, createPostController);
-app.get("/posts", authenticateUser, getPostsController);
-app.get("/posts/:postId", authenticateUser, getPostByIdController);
-app.patch("/posts/:postId", authenticateUser, updatePostController);
-app.delete("/posts/:postId", authenticateUser, deletePostController);
+// app.post("/posts", authenticateUser, createPostController);
+// app.get("/posts", authenticateUser, getPostsController);
+// app.get("/posts/:postId", authenticateUser, getPostByIdController);
+// app.patch("/posts/:postId", authenticateUser, updatePostController);
+// app.delete("/posts/:postId", authenticateUser, deletePostController);
 
-// CRUD routes for comments
-app.post("/posts/:postId/comments", authenticateUser, createCommentController);
-app.get("/posts/:postId/comments", authenticateUser, getCommentsController);
-app.get("/posts/:postId/comments/:commentId", authenticateUser, getCommentByIdController);
-app.patch("/posts/:postId/comments/:commentId", authenticateUser, updateCommentController);
-app.delete("/posts/:postId/comments/:commentId", authenticateUser, deleteCommentController);
+// // CRUD routes for comments
+// app.post("/posts/:postId/comments", authenticateUser, createCommentController);
+// app.get("/posts/:postId/comments", authenticateUser, getCommentsController);
+// app.get("/posts/:postId/comments/:commentId", authenticateUser, getCommentByIdController);
+// app.patch("/posts/:postId/comments/:commentId", authenticateUser, updateCommentController);
+// app.delete("/posts/:postId/comments/:commentId", authenticateUser, deleteCommentController);
