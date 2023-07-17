@@ -14,9 +14,7 @@ const createPostController = async (req, res) => {
         res.status(201).json(newPost);
     } catch (err) {
         if (err.name === "SequelizeValidationError") {
-            return res
-                .status(422)
-                .json({ errors: err.errors.map((e) => e.message) });
+            return res.status(422).json({ errors: err.errors.map((e) => e.message) });
         }
         console.error(err);
         res.status(500).send({ message: err.message });

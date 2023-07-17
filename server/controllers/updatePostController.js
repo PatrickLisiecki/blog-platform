@@ -4,13 +4,10 @@ const updatePostController = async (req, res) => {
     const targetId = parseInt(req.params.postId, 10);
 
     try {
-        const [numberOfAffectedRows, affectedRows] = await Post.update(
-            req.body,
-            {
-                where: { id: targetId },
-                returning: true,
-            }
-        );
+        const [numberOfAffectedRows, affectedRows] = await Post.update(req.body, {
+            where: { id: targetId },
+            returning: true,
+        });
 
         if (numberOfAffectedRows > 0) {
             res.status(200).json(affectedRows[0]);
@@ -19,9 +16,7 @@ const updatePostController = async (req, res) => {
         }
     } catch (err) {
         if (err.name === "SequelizeValidationError") {
-            return res
-                .status(422)
-                .json({ errors: err.errors.map((e) => e.message) });
+            return res.status(422).json({ errors: err.errors.map((e) => e.message) });
         }
         console.error(err);
         res.status(500).send({ message: err.message });

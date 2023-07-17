@@ -2,7 +2,7 @@ const { Post } = require("../models");
 
 const getPostByIdController = async (req, res) => {
     const targetId = parseInt(req.params.postId, 10);
-    
+
     try {
         // SELECT * FROM posts WHERE id = targetId;
         const targetPost = await Post.findOne({ where: { id: targetId } });
