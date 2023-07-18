@@ -1,36 +1,26 @@
 import { useContext } from "react";
-import { Form, Link, redirect, Navigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthContext";
-
-export async function action({ request }) {
-    const formData = await request.formData();
-
-    const response = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData)),
-    });
-
-    if (!response.ok) {
-        return null;
-    }
-
-    return redirect("/");
-}
+import { Form, Link, Navigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Login() {
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, login } = useContext(AuthContext);
 
     if (currentUser) {
         return <Navigate to="/" />;
     }
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const credentials = Object.fromEntries(formData);
+        await login(credentials);
+    };
+
     return (
         <div className="w-full min-h-screen flex justify-center items-center">
             <Form
                 method="post"
+                onSubmit={handleSubmit}
                 className="w-5/12 h-[600px] p-20 flex flex-col items-center gap-y-4 rounded-xl bg-white border border-gray-400"
             >
                 <div className="w-full mb-6 text-center">

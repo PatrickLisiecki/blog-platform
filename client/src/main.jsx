@@ -5,9 +5,9 @@ import AuthProvider from "./contexts/AuthContext";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import Login, { action as LoginAction } from "./components/Login";
-import Signup, { action as SignupAction } from "./components/Signup";
-import Root, { loader as RootLoader, action as LogoutAction } from "./routes/Root";
+import Login from "./routes/auth/Login";
+import Signup from "./routes/auth/Signup";
+import Root from "./routes/Root";
 
 const router = createBrowserRouter([
     {
@@ -18,20 +18,16 @@ const router = createBrowserRouter([
             </ProtectedRoute>
         ),
         errorElement: <ErrorPage />,
-        loader: RootLoader,
-        action: LogoutAction,
     },
     {
         path: "/login",
         element: <Login />,
         errorElement: <ErrorPage />,
-        action: LoginAction,
     },
     {
         path: "/signup",
         element: <Signup />,
         errorElement: <ErrorPage />,
-        action: SignupAction,
     },
 ]);
 

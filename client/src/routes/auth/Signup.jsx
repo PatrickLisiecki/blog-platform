@@ -1,37 +1,26 @@
-import { Form, Link, redirect, Navigate } from "react-router-dom";
+import { Form, Link, Navigate } from "react-router-dom";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
-
-export async function action({ request }) {
-    const formData = await request.formData();
-
-    const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData)),
-    });
-
-    if (!response.ok) {
-        // invalid submission, remain on signup page
-        return null;
-    }
-
-    return redirect("/");
-}
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function Signup() {
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, signup } = useContext(AuthContext);
 
     if (currentUser) {
         return <Navigate to="/" />;
     }
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const credentials = Object.fromEntries(formData);
+        await signup(credentials);
+    };
+
     return (
         <div className="w-full min-h-screen flex justify-center items-center">
             <Form
                 method="post"
+                onSubmit={handleSubmit}
                 className="w-5/12 h-[600px] p-20 flex flex-col items-center gap-y-4 rounded-xl bg-white border border-gray-400"
             >
                 <div className="w-full mb-6 text-center">
