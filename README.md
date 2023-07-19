@@ -1,4 +1,4 @@
-# Blog Platform Backend
+# Blog Platform
 
 This is a CRUD web application for a blogging platform that incorporates database relationships
 using Sequelize and implements user authentication and authorization. The application allows users
