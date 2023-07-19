@@ -89,9 +89,10 @@ The application includes user registration and login functionality with secure p
    tool.
 4. API endpoints to handle user registration, login, and logout operations:
    
-   - ```POST /signup```: Create a new User with a name and password.
-   - ```POST /login```: Login to an existing User.
-   - ```DELETE /logout```: Logout of an existing User.
+   - ```POST /api/auth/signup```: Create a new User with a name and password.
+   - ```POST /api/auth/login```: Login to an existing User.
+   - ```GET /api/auth/current_user```: Gets the current user of the session.
+   - ```DELETE /api/auth/logout```: Logout of an existing User.
 
 ## CRUD Operations for Posts
 
